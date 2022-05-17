@@ -14,4 +14,4 @@ export const NotificationsBtn = () => {
 			<FontAwesomeIcon icon={faBell} />
 		</button>
 	);
-}
+};
