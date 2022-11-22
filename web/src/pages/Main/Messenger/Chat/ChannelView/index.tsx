@@ -1,6 +1,5 @@
 import { useAppSelector } from "hook/reduxHooks";
 import { ApiChannelExpand } from "models/ApiTypes";
-import React from "react";
 
 import Private from "./Private";
 import Public from "./Public";

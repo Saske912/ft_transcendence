@@ -1,7 +1,5 @@
 import './styles.scss';
 
-import React from 'react';
-
 interface ConfirmationWindowProps {
 	title: string;
 	okHandler: () => void;

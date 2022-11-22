@@ -3,13 +3,15 @@ import { AuthGuard } from "@nestjs/passport";
 import { FindGameDTO } from "ladder/ladder.dto";
 import { LadderService } from 'ladder/ladder.service';
 
+import { OnlineUser } from '../users/users.interface';
+
 @Controller('ladder')
 export class LadderController {
 	constructor(private ladder: LadderService) {}
 
 	@UseGuards(AuthGuard('jwt'))
 	@Get('setStatus')
-	findGame(@Req() req, @Query() { status }: FindGameDTO) {
+	findGame(@Req() req: {user: OnlineUser}, @Query() { status }: FindGameDTO) {
 		const user = req.user;
 
 		this.ladder.updateStatus(user.id, status);

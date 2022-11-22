@@ -2,7 +2,6 @@ import { faCommentSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ApiChannelExpand, ApiChannelMember } from "models/ApiTypes";
 import moment from "moment";
-import React from "react";
 
 interface MuteIndicatorProps {
 	member: ApiChannelMember;

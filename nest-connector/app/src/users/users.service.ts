@@ -59,13 +59,17 @@ export class UsersService {
 		for (let i = 0; i < users.length; ++i) {
 			const subscriptionsExpand: any = [];
 			for (let j = 0; j < users[i].subscriptions.length; ++j) {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
 				subscriptionsExpand.push(await this.findOneById(users[i].subscriptions[j].targetId, false));
 			}
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			users[i].subscriptions = subscriptionsExpand;
 
 			const subscribersExpand: any = [];
 			for (let j = 0; j < users[i].subscribers.length; ++j)
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
 				subscribersExpand.push(await this.findOneById(users[i].subscribers[j].userId, false));
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			users[i].subscribers = subscribersExpand;
 		}
 		return users;
@@ -235,6 +239,7 @@ export class UsersService {
 		else
 			this.onlineUsers[index] = newUser;
 		this.updateUser();
+		return { ok: true };
 	}
 
 	async uploadAvatar(userId: number, urlAvatar: string) {
@@ -311,7 +316,7 @@ export class UsersService {
 		return this.usersSocketIds.get(socketId);
 	}
 
-	public static onlineUserToJson(user) {
+	public static onlineUserToJson(user: OnlineUser) {
 		return {
 			id: user.id,
 			login: user.login,

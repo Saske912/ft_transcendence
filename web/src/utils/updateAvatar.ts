@@ -19,4 +19,6 @@ export const updateAvatar = async (imageState: ImageState) => {
 
 		return EditUser.uploadAvatar(formData);
 	}
+
+	throw new Error('Unhandled');
 };

@@ -1,5 +1,4 @@
 import moment from "moment";
-import React from "react";
 import Moment from "react-moment";
 
 export const GameTime = ({ date }: { date: string }) => {

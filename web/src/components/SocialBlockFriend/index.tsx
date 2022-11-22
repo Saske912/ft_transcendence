@@ -1,5 +1,4 @@
 import { ApiUserExpand } from "models/ApiTypes";
-import React from "react";
 import { Link } from "react-router-dom";
 
 export const SocialBlockFriend = ({ user }: { user: ApiUserExpand }) => {

@@ -8,6 +8,7 @@ export class GameGateway {
 
 	@SubscribeMessage('start')
 	launchBall(@MessageBody() data: string) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const startData: { login: string, id: string } = JSON.parse(data);
 		const game = this.gameService.games.find(g => g.id === startData.id);
 		if (!game)
@@ -45,6 +46,7 @@ export class GameGateway {
 
 	@SubscribeMessage('keyDown')
 	keyDownHandler(@MessageBody() data: string) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const event: { login: string, gameId: string, key: string } = JSON.parse(data);
 		const game = this.gameService.games.find(g => g.id === event.gameId);
 		if (!game)
@@ -66,6 +68,7 @@ export class GameGateway {
 
 	@SubscribeMessage('keyUp')
 	keyUpHandler(@MessageBody() data: string) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const event: { login: string, gameId: string, key: string } = JSON.parse(data);
 		const game = this.gameService.games.find(g => g.id === event.gameId);
 		if (!game)

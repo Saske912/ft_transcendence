@@ -198,7 +198,7 @@ const GameCanvas = ({ watchMode, gameSettings }: GameCanvasProps) => {
 			ctx.closePath();
 		};
 
-		const drawLeftRectangle = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+		const drawLeftRectangle = (_canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
 			ctx.rect(playerMargin, leftPlayer.yPosition, playerWidth, playerHeight);
 			ctx.fill();
 		};
@@ -219,7 +219,7 @@ const GameCanvas = ({ watchMode, gameSettings }: GameCanvasProps) => {
 			ctx.fill();
 		};
 
-		const drawBall = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+		const drawBall = (_canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
 			if (ballType === BallType.Square) {
 				ctx.rect(ball.xPosition, ball.yPosition, ball.size, ball.size);
 				ctx.fill();

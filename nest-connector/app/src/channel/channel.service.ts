@@ -39,6 +39,7 @@ export class ChannelService {
 
 			return res;
 		} catch (e) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			throw new HttpException(e.detail, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -75,6 +76,7 @@ export class ChannelService {
 			this.updateChannelEvent();
 			return r;
 		} catch (e) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			throw new HttpException(e.detail, HttpStatus.BAD_REQUEST);
 		}
 	}

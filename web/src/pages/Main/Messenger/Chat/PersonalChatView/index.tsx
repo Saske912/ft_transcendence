@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "hook/reduxHooks";
 import { ApiChatExpand } from "models/ApiTypes";
 import moment from "moment";
 import Message from "pages/Main/Messenger/Chat/Message";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { closeSelectedChat } from "store/reducers/messengerSlice";

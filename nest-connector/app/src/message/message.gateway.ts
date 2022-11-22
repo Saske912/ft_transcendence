@@ -19,8 +19,10 @@ export class MessageGateway {
 
 	@SubscribeMessage('sendMessage')
 	async sendMessageHandler(client: Socket, data: string): Promise<void> {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const msgData: { text: string, chatId?: number, channelId?: number } = JSON.parse(data);
 		const senderLogin = this.usersService.getUsernameBySocketId(client.id);
+		// eslint-disable-next-line @typescript-eslint/await-thenable
 		const sender = await this.usersService.onlineUsers.find(usr => usr.login === senderLogin);
 
 		if (!sender)

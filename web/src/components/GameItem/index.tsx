@@ -1,6 +1,5 @@
 import {GameTime} from "components/GameTime";
 import {ApiGame, ApiUser} from "models/ApiTypes";
-import React from 'react';
 import {Link} from "react-router-dom";
 
 interface GameItemProps {

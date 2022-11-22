@@ -1,9 +1,9 @@
 import './styles.scss';
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UserMenu from 'components/Header/UserMenu';
+import { NotificationsBtn } from 'components/NotificationsBtn';
 import { useAppSelector } from 'hook/reduxHooks';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
@@ -46,16 +46,14 @@ const Header = ({ centerBlock }: HeaderProps) => {
 					)}
 
 					<div className="header-buttons">
-						<button className="notifications-btn">
-							<FontAwesomeIcon icon={faBell} />
-						</button>
+						<NotificationsBtn />
 						<button className="user-btn" onClick={() => setShowUserMenu((prev) => !prev)}>
 							<div
 								className="user-btn-img"
 								style={{ backgroundImage: `url(${currentUser.urlAvatar})` }}
 							/>
 							<div className="user-status" style={{ backgroundColor: status }} />
-							{showUserMenu && <UserMenu closeUserMenu={() => setShowUserMenu(false)}/>}
+							{showUserMenu && <UserMenu closeUserMenu={() => setShowUserMenu(false)} />}
 						</button>
 					</div>
 				</div>
@@ -72,13 +70,11 @@ const Header = ({ centerBlock }: HeaderProps) => {
 				{centerBlock || null}
 
 				<div className="header-buttons">
-					<button className="notifications-btn">
-						<FontAwesomeIcon icon={faBell} />
-					</button>
+					<NotificationsBtn />
 					<button className="user-btn" onClick={() => setShowUserMenu((prev) => !prev)}>
 						<div className="user-btn-img" style={{ backgroundImage: `url(${currentUser.urlAvatar})` }} />
 						<div className="user-status" style={{ backgroundColor: status }} />
-						{showUserMenu && <UserMenu closeUserMenu={() => setShowUserMenu(false)}/>}
+						{showUserMenu && <UserMenu closeUserMenu={() => setShowUserMenu(false)} />}
 					</button>
 				</div>
 			</div>

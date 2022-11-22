@@ -1,7 +1,6 @@
 import './styles.scss';
 
 import { ApiUser } from "models/ApiTypes";
-import React from "react";
 
 interface LeftMenuChatProps {
 	companion: ApiUser;

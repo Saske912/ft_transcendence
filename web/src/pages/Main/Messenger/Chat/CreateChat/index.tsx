@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as MessengerApi from 'api/messenger';
 import { useAppDispatch, useAppSelector } from "hook/reduxHooks";
 import { ApiUserExpand } from 'models/ApiTypes';
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { setDefaultChatState } from "store/reducers/messengerSlice";
 
 const CreateChat = () => {

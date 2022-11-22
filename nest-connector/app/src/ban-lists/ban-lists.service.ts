@@ -22,6 +22,7 @@ export class BanListsService {
 			ban.unbanDate = unbanDate === null ? null : new Date(unbanDate);
 			return await this.banListsRepository.save(ban);
 		} catch (e) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			throw new HttpException(e.detail, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -36,8 +37,10 @@ export class BanListsService {
 				return await this.banListsRepository.remove(bans);
 			}
 		} catch (e) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			throw new HttpException(e.detail, HttpStatus.BAD_REQUEST);
 		}
+		throw new Error('Unhandled');
 	}
 
 }

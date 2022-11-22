@@ -2,7 +2,6 @@ import './styles.scss';
 
 import CircleLoading from 'components/CircleLoading';
 import Header from 'components/Header';
-import React from 'react';
 
 const FullPageLoader = () => (
 	<>

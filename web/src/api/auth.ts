@@ -114,6 +114,8 @@ export const getUserFromIntra = async (
 
 		return { user, twoFactorAuthentication: r.twoFactorAuthentication };
 	}
+
+	throw new Error('Unhandled');
 };
 
 export const verifySms = (code: string, phoneNumber: string) => {

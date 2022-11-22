@@ -22,6 +22,8 @@ import {
 } from "users/users.dto";
 import { UsersService } from 'users/users.service';
 
+import { OnlineUser } from './users.interface';
+
 @Controller('users')
 export class UsersController {
 	constructor(
@@ -40,6 +42,7 @@ export class UsersController {
 		}
 		const r = await this.usersService.createLocal(login, pass, null)
 			.catch(e => {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 				throw new HttpException(e.detail, HttpStatus.BAD_REQUEST);
 			});
 		return { ok: true, msg: `User ${r.login} created` };
@@ -71,7 +74,7 @@ export class UsersController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Get('subscribe')
-	async subscribeHandler(@Req() req, @Query() { target }: SubscribeHandlerDTO) {
+	async subscribeHandler(@Req() req: {user: OnlineUser}, @Query() { target }: SubscribeHandlerDTO) {
 		const user = req.user;
 
 		return await this.usersService.subscribeToUser(user.id, target);
@@ -80,7 +83,7 @@ export class UsersController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Get('unsubscribe')
-	async unsubscribeHandler(@Req() req, @Query() { target }: SubscribeHandlerDTO) {
+	async unsubscribeHandler(@Req() req: {user: OnlineUser}, @Query() { target }: SubscribeHandlerDTO) {
 		const user = req.user;
 
 		return await this.usersService.unsubscribeFromUser(user.id, target);
@@ -89,7 +92,7 @@ export class UsersController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('updateAvatar')
-	async updateAvatar(@Req() req, @Body() { urlAvatar }: UpdateAvatarDTO) {
+	async updateAvatar(@Req() req: {user: OnlineUser}, @Body() { urlAvatar }: UpdateAvatarDTO) {
 		const user = req.user;
 
 		return await this.usersService.updateAvatar(user.id, urlAvatar);
@@ -99,7 +102,7 @@ export class UsersController {
 	@UseGuards(AuthGuard('jwt'))
 	@UseInterceptors(FileInterceptor('picture', saveImageToStorage))
 	@Post('uploadAvatar')
-	async uploadAvatar(@Req() req, @UploadedFile() file: Express.Multer.File) {
+	async uploadAvatar(@Req() req: {user: OnlineUser}, @UploadedFile() file: Express.Multer.File) {
 		const user = req.user;
 
 		if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg')
@@ -111,7 +114,7 @@ export class UsersController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('updateUsername')
-	async updateUsername(@Req() req, @Body() { username, socketId }: UpdateUsernameDTO) {
+	async updateUsername(@Req() req: {user: OnlineUser}, @Body() { username, socketId }: UpdateUsernameDTO) {
 		const user = req.user;
 
 		return await this.usersService.updateUsername(user.id, username, socketId);
@@ -120,30 +123,27 @@ export class UsersController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('logout')
-	userLogout(@Req() req, @Body() {  }: EmptyDTO) {
+	userLogout(@Req() req: {user: OnlineUser}, @Body() {  }: EmptyDTO) {
 		const user = req.user;
 
 		const index = this.usersService.onlineUsers.findIndex(usr => usr.id === user.id);
 		if (index !== -1) {
 			this.usersService.userEvent('logout', this.usersService.onlineUsers[index]);
 			this.usersService.onlineUsers.splice(index, 1);
-			this.usersService.onlineUsers = this.usersService.onlineUsers.filter(val => {
-				if (val) {
-					return val;
-				}});
+			this.usersService.onlineUsers = this.usersService.onlineUsers.filter(Boolean);
 		}
 	}
 
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('local'))
 	@Post('login')
-	async login(@Req() req, @Body() { socketId, code }: LoginDTO) {
+	async login(@Req() req: {user: OnlineUser}, @Body() { socketId, code }: LoginDTO) {
 		const user = req.user;
 
 		const usr = await this.usersService.findOneById(user.id);
 		if (usr.phoneNumber !== null && !isDefined(code)) {
 			await this.authService.sendSMS(usr.phoneNumber);
-			return { access_token: null, twoFactorAuthentication: true };
+			return { access_token: null as string | null, twoFactorAuthentication: true };
 		}
 		if (usr.phoneNumber !== null && isDefined(code) && !await this.authService.verifySMS(user.id, usr.phoneNumber, code)) {
 			throw new HttpException('Access Denied', HttpStatus.BAD_REQUEST);

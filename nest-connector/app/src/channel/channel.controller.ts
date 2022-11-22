@@ -19,6 +19,8 @@ import {
 import { ChannelService } from "channel/channel.service";
 import { isDefined } from "class-validator";
 
+import { OnlineUser } from '../users/users.interface';
+
 @Controller('channels')
 export class ChannelController {
 
@@ -27,7 +29,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('create')
-	async createChannel(@Req() req, @Body() { name, title, isPrivate, password }: CreateChannelDTO) {
+	async createChannel(@Req() req: {user: OnlineUser}, @Body() { name, title, isPrivate, password }: CreateChannelDTO) {
 		const user = req.user;
 
 		// todo [name validation]
@@ -37,7 +39,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Get()
-	async getChannels(@Req() req, @Query() { expand }: ExpandDTO) {
+	async getChannels(@Req() req: {user: OnlineUser}, @Query() { expand }: ExpandDTO) {
 		const { user } = req;
 
 		return await this.channelService.getChannels(user.id, isDefined(expand));
@@ -46,7 +48,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('join')
-	async joinChannel(@Req() req, @Body() { channelId, password }: JoinChannelDTO) {
+	async joinChannel(@Req() req: {user: OnlineUser}, @Body() { channelId, password }: JoinChannelDTO) {
 		const user = req.user;
 
 		return await this.channelService.addMember(channelId, user.id, password);
@@ -55,7 +57,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Put('updateMemberStatus')
-	async updateMemberStatus(@Req() req, @Body() { channelId, memberId, status }: UpdateMemberStatusDTO) {
+	async updateMemberStatus(@Req() req: {user: OnlineUser}, @Body() { channelId, memberId, status }: UpdateMemberStatusDTO) {
 		const user = req.user;
 
 		return await this.channelService.updateMemberStatus(user.id, channelId, memberId, status);
@@ -64,7 +66,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('muteMember')
-	async muteMember(@Req() req, @Body() { channelId, memberId, unbanDate }: MuteMemberDTO) {
+	async muteMember(@Req() req: {user: OnlineUser}, @Body() { channelId, memberId, unbanDate }: MuteMemberDTO) {
 		const user = req.user;
 
 		return await this.channelService.muteMember(user.id, channelId, memberId, unbanDate);
@@ -73,7 +75,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('unmuteMember')
-	async unmuteMember(@Req() req, @Body() { channelId, memberId }: UnmuteMemberDTO) {
+	async unmuteMember(@Req() req: {user: OnlineUser}, @Body() { channelId, memberId }: UnmuteMemberDTO) {
 		const user = req.user;
 
 		return await this.channelService.unmuteMember(user.id, channelId, memberId);
@@ -82,7 +84,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Put('update')
-	async update(@Req() req, @Body() { channelId, isPrivate, password }: UpdateChannelDTO) {
+	async update(@Req() req: {user: OnlineUser}, @Body() { channelId, isPrivate, password }: UpdateChannelDTO) {
 		const user = req.user;
 
 		if (isDefined(password)) {
@@ -94,7 +96,7 @@ export class ChannelController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('leave')
-	async leave(@Req() req, @Body() { channelId }: LeaveChannelDTO) {
+	async leave(@Req() req: {user: OnlineUser}, @Body() { channelId }: LeaveChannelDTO) {
 		const user = req.user;
 
 		return await this.channelService.leaveChannel(user.id, channelId);

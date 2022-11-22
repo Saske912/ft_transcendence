@@ -1,0 +1,24 @@
+{
+  "name": "ft_transcendence",
+  "version": "1.0.0",
+  "scripts": {
+    "prepare": "husky install",
+    "test": "lint-staged",
+    "build": "npm run build --prefix ./web && npm run build --prefix ./nest-connector/app",
+    "lint": "npm run lint --prefix ./web && npm run lint --prefix ./nest-connector/app",
+    "typecheck": "npm run typecheck --prefix ./web && npm run typecheck --prefix ./nest-connector/app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bandrw/ft_transcendence.git"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+    ]
+  },
+  "devDependencies": {
+    "eslint": "7.11.0",
+    "husky": "8.0.1",
+    "lint-staged": "13.0.2"
+  }
+}

@@ -4,7 +4,6 @@ import 'react-phone-input-2/lib/style.css';
 import { ChangePictureForm } from "components/ChangePictureForm";
 import { ChangeUsernameForm } from "components/ChangeUsernameForm";
 import { TwoFactorAuthenticationForm } from "components/TwoFactorAuthenticationForm";
-import React from 'react';
 
 const UserEditWindow = () =>
 	(

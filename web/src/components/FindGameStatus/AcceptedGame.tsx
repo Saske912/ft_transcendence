@@ -3,7 +3,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {AcceptWindow} from "components/AcceptWindow";
 import {useAppDispatch} from "hook/reduxHooks";
 import {ApiUpdateUser, ApiUserStatus} from "models/ApiTypes";
-import React from 'react';
 import {Fade} from "react-awesome-reveal";
 import {setStatus} from "store/reducers/statusSlice";
 

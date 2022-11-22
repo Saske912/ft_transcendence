@@ -1,6 +1,6 @@
 import './styles.scss';
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 interface CircleLoadingProps {
 	bgColor?: string;
@@ -19,7 +19,7 @@ const CircleLoading = ({ bgColor = '#000', width = '50px', height = '50px' }: Ci
 
 	return (
 		<div className="lds-spinner" style={{ width, height }}>
-			{divArray.map((item, i) => (
+			{divArray.map((_item, i) => (
 				// eslint-disable-next-line react/no-array-index-key
 				<div key={i} style={{ backgroundColor: bgColor }} />
 			))}

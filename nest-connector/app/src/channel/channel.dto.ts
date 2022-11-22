@@ -19,6 +19,7 @@ export class CreateChannelDTO {
 	@IsBoolean()
 	isPrivate: boolean;
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
 	@ValidateIf(o => o.isPrivate)
 	@IsString()
 	@MinLength(6)
@@ -73,6 +74,7 @@ export class UpdateChannelDTO {
 	@IsBoolean()
 	isPrivate: boolean;
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
 	@ValidateIf(o => o.isPrivate)
 	@IsString()
 	@MinLength(6)

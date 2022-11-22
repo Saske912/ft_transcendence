@@ -16,6 +16,8 @@ import axios from "axios";
 import { isDefined } from "class-validator";
 import { UsersService } from "users/users.service";
 
+import { OnlineUser } from '../users/users.interface';
+
 @Controller('auth')
 export class AuthController {
 
@@ -24,7 +26,7 @@ export class AuthController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Get()
-	async auth(@Req() req, @Query() { socketId }: AuthDTO) {
+	async auth(@Req() req: {user: OnlineUser}, @Query() { socketId }: AuthDTO) {
 		const user = req.user;
 
 		await this.usersService.login(user.id, socketId);
@@ -44,22 +46,28 @@ export class AuthController {
 				code,
 				redirect_uri: process.env.INTRA_REDIRECT
 			};
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const r = await axios.post('https://api.intra.42.fr/oauth/token', data)
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 				.then(res => res.data)
 				.catch(() => null);
 			if (!r)
 				throw new UnauthorizedException();
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
 			access_token_intra = r.access_token;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const me = await axios.get('https://api.intra.42.fr/v2/me', {
 			headers: { Authorization: `Bearer ${access_token_intra}` }
 		})
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			.then(res => res.data)
 			.catch(() => null);
 		if (!me)
 			throw new UnauthorizedException();
 
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const { login: intraLogin, image_url: intraImage } = me;
 
 		const foundUser = await this.usersService.findOneByIntraLogin(intraLogin);
@@ -84,7 +92,7 @@ export class AuthController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Get('sendSms')
-	async sendSms(@Req() req, @Query() { phoneNumber }: SendSmsDTO) {
+	async sendSms(@Req() req: {user: OnlineUser}, @Query() { phoneNumber }: SendSmsDTO) {
 		const user = req.user;
 
 		if (!await this.usersService.findOneById(user.id))
@@ -96,7 +104,7 @@ export class AuthController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Get('verifySms')
-	async verifySms(@Req() req, @Query() { code, phoneNumber }: VerifySmsDTO) {
+	async verifySms(@Req() req: {user: OnlineUser}, @Query() { code, phoneNumber }: VerifySmsDTO) {
 		const user = req.user;
 
 		return await this.authService.verifySMS(user.id, phoneNumber, code);
@@ -105,7 +113,7 @@ export class AuthController {
 	@UsePipes(new ValidationPipe({ transform: true, forbidNonWhitelisted: true }))
 	@UseGuards(AuthGuard('jwt'))
 	@Post('disable2FA')
-	async disable2FA(@Req() req, @Body() {  }: EmptyDTO) {
+	async disable2FA(@Req() req: {user: OnlineUser}, @Body() {  }: EmptyDTO) {
 		const user = req.user;
 
 		return await this.usersService.disable2FA(user.id);

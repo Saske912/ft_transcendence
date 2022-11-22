@@ -103,7 +103,7 @@ export class LadderService {
 		return new Game(gamer1, gamer2);
 	}
 
-	awayFromKeyboard(userIndex) {
+	awayFromKeyboard(userIndex: number) {
 		this.lobby[userIndex].first.status = 'yellow';
 		// this.usersService.userEvent('updateUser', this.lobby[userIndex].first);
 		this.usersService.updateUser();
@@ -179,7 +179,7 @@ export class LadderService {
 	//   }
 	// }
 
-	removeFromLadder(user: OnlineUser, func) {
+	removeFromLadder(user: OnlineUser, func: (i: number) => void) {
 		let i = 0;
 		while (i < this.lobby.length) {
 			if (this.lobby[i].first && this.lobby[i].first.login === user.login) {
@@ -268,7 +268,7 @@ export class LadderService {
 			}
 			return duel;
 		}
-		const newDuel = {
+		const newDuel: {chatId: number, first: OnlineUser | null, second: OnlineUser | null} = {
 			chatId,
 			first: user,
 			second: null

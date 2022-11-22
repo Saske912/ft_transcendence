@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "hook/reduxHooks";
 import { ApiBanList, ApiChannelExpand, ApiChannelMember } from "models/ApiTypes";
 import moment from "moment";
 import Message from "pages/Main/Messenger/Chat/Message";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { ChatState, closeSelectedChat, setChatState } from "store/reducers/messengerSlice";
 import { getTargetUser } from "utils/getTargetUser";

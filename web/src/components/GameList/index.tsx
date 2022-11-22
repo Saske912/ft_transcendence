@@ -3,7 +3,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import GameItem from "components/GameItem";
 import {useAppSelector} from "hook/reduxHooks";
 import { ApiGame } from "models/ApiTypes";
-import React from 'react';
 import { useParams } from "react-router-dom";
 import {getTargetUser} from "utils/getTargetUser";
 

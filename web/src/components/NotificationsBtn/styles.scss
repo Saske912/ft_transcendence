@@ -1,0 +1,11 @@
+.notifications-btn {
+	& > svg {
+		color: white;
+	}
+
+    &_disabled {
+		& > svg {
+			color: gray;
+		}
+    }
+}

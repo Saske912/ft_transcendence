@@ -2,7 +2,6 @@ import { faTv } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getWatchGame } from "api/social";
 import { ApiUpdateUser, ApiUserStatus } from "models/ApiTypes";
-import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
 interface SocialBlockOnlineUserProps {
